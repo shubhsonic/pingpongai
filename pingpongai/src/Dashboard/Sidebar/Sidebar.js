@@ -1,8 +1,11 @@
 import React from 'react'
+import NewChatButton from './NewChatButton';
 
 const Sidebar = () => {
   return (
-    <div className='sidebar_container'>Sidebar Container</div>
+    <div className='sidebar_container'>
+        <NewChatButton />
+    </div>
   )
 }
 
