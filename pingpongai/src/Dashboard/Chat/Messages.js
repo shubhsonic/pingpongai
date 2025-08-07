@@ -5,7 +5,7 @@ const Messages = () => {
   return (
     <div className='chat_messages_container'>
         <Message content='Hello ai' aiMessage={false} />
-        <Message content='Hello here is ai.' aiMessage={true}/>
+        <Message animate={true} content='Hello here is ai.' aiMessage={true}/>
     </div>
   )
 }

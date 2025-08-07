@@ -9,7 +9,7 @@ const DeleteConversationButton = () => {
             <div className='list_item_icon'>
                 <AiOutlineDelete color='white' />
             </div>
-            <p className='list_item_text'>Delete conversations</p>
+            <p className='list_item_text'>Delete conversation</p>
         </div>
   )
 }
