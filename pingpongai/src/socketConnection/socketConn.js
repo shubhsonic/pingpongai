@@ -10,3 +10,10 @@ export const connectionWithSocketServer = () => {
         console.log(socket.id);
     })
 };
+
+export const sendConversationMessage = (message, conversationId) => {
+    socket.emit("conversation-message", {
+        message,
+        conversationId,
+    })
+};

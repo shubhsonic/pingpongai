@@ -1,9 +1,18 @@
 import React, { useState } from 'react'
 import { BsSend } from 'react-icons/bs'
+import { useSelector, useDispatch } from 'react-redux';
 import { v4 as uuid } from "uuid";
+import { addMessage, setSelectedConversationId } from '../dashboardSlice';
+import { sendConversationMessage } from '../../socketConnection/socketConn';
 
 const NewMessageInput = () => {
   const [content, setContent] = useState('');
+
+  const dispatch = useDispatch();
+
+  const selectedConversationId = useSelector(
+    (state) => state.dashboard.selectedConversationId
+  );
 
   const proceedMessage =() => {
       const message = {
@@ -15,22 +24,33 @@ const NewMessageInput = () => {
 
       console.log(message);
 
-      // append this message to our local store
+      const conversationId = 
+        selectedConversationId === "new" ? uuid() : selectedConversationId;
+
+      dispatch(
+        addMessage({
+          conversationId,
+          message,
+        })
+      );
+
+      dispatch(setSelectedConversationId(conversationId));
 
       // send message to the server
+      sendConversationMessage(message, conversationId);
 
       setContent('');
   };
 
   // Reminder: what is message is "      " also add condition from trim()
   const handleSendMessage = () => {
-    if(content.length > 0) {
+    if(content.trim() === '') return;
       proceedMessage();
-    }
   }
 
   const handleKeyPressed = (event) => {
-    if(event.code === "Enter" && content.length > 0) {
+    if(content.trim() === '') return;
+    if(event.code === "Enter") {
       proceedMessage();
     }
   }
