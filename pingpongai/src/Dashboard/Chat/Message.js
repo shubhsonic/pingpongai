@@ -27,7 +27,7 @@ const Message = ({ content, aiMessage, animate }) => {
   return (
     <div
     className='message_container'
-    style={{ background: aiMessage ? "rgba(235, 236, 240)" : "white"}}
+    style={{ background: aiMessage ? "#3f4041" : "#636060ff"}}
     >
         <div className='message_avatar_container'>
             {aiMessage ? <FcMindMap /> : <GrUser />}

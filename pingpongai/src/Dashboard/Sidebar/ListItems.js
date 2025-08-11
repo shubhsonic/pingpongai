@@ -2,9 +2,9 @@ import React from 'react'
 import { BsChatLeft } from 'react-icons/bs'
 
 const ListItems = (props) => {
-    const { title } = props
+    const { title, handleSetSelectedChat, conversationId } = props
     return (
-        <div className='list_item' onClick={() => { }}>
+        <div className='list_item' onClick={() => handleSetSelectedChat(conversationId)}>
             <div className='list_item_icon'>
                 <BsChatLeft color='white' />
             </div>

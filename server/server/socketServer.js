@@ -21,6 +21,10 @@ const registerSocketServer = (server) => {
         socket.on('conversation-message', (data) => {
             conversationMessageHandler(socket, data)
         })
+
+        socket.on('conversation-delete', (data) => {
+            conversationDeleteHandler(socket, data);
+        })
     });
 };
 
@@ -45,11 +49,48 @@ const sessionHistoryHandler = (socket, data) => {
 
         socket.emit('session-details', sessionDetails)
     }
-}
+};
 
 const conversationMessageHandler = (socket, data) => {
-    console.log("message came form client side");
-    console.log(data);
-}
+    const { sessionId, message, conversationId } = data;
+
+    if(sessions[sessionId]) {
+        const aiMessage = {
+            content: "Hello here is AI",
+            id: uuid(),
+            aiMessage: true,
+        };
+
+        const conversation = sessions[sessionId].find(
+            (c) => c.id === conversationId
+        );
+
+        // first msg in new conversation
+        if(!conversation) {
+            sessions[sessionId].push({
+                id: conversationId,
+                messages: [message, aiMessage],
+            });
+        }
+
+        if(conversation){
+            conversation.messages.push(message, aiMessage)
+        }
+
+        const updatedConversation = sessions[sessionId].find(
+            (c) => c.id === conversationId
+        );
+
+        socket.emit("conversation-details", updatedConversation);
+    }
+};
+
+const conversationDeleteHandler = (_, data) => {
+    const { sessionId } = data;
+
+    if(sessions[sessionId]){
+        sessions[sessionId] = [];
+    }
+};
 
 module.exports = { registerSocketServer }

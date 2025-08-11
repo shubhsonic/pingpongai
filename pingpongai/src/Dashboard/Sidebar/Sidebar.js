@@ -19,7 +19,11 @@ const Sidebar = () => {
     <div className='sidebar_container'>
       <NewChatButton handleSetSelectedChat={handleSetSelectedChat} />
       {conversations.map(c => (
-        <ListItems key={c.id} title={c.messages[0].content} chatId={c.id} />
+        <ListItems 
+        key={c.id} 
+        title={c.messages[0].content} 
+        conversationId={c.id}
+        handleSetSelectedChat={handleSetSelectedChat} />
       ))}
       <DeleteConversationButton />
     </div>
